@@ -345,11 +345,11 @@ router.get('/BanBe/:idNguoiDung',async function (req,res){
     if (themBanBe == null){
         await NguoiDung.create({
             trangThai:1
-        }).then(result => {idDuocTheoDoi = result._id})
+        }).then(result => {id = result._id})
 
         res.end(JSON.stringify({
             data:{
-                id:idDuocTheoDoi,
+                id:id,
                 trangThai:1
             },
             message:'Ket ban thanh cong'
