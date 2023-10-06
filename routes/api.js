@@ -339,5 +339,24 @@ router.get('/getDanhSach/:idNguoiDung', async function (req, res) {
     }));
 });
 
+router.get('/BanBe/:idNguoiDung',async function (req,res){
+    const idNguoiDung = req.params.idNguoiDung;
+    const idDuocTheoDoi = req.body.idDuocTheoDoi;
+    const trangThai = req.body.trangThai;
+    var themBanBe = await NguoiDung.findOne(NguoiDung.where({idNguoiDung: idNguoiDung,trangThai: 1}));
+
+
+    if (themBanBe == null){
+        res.end(JSON.stringify({
+            data: false,
+            message:'Chưa tồn tại trong danh sách'
+        }));
+    }else{
+        res.end(JSON.stringify({
+            data: true,
+            message:'Đã tồn tại trong danh sách'
+        }));
+    }
+});
 
 module.exports = router;
