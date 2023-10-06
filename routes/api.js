@@ -341,22 +341,23 @@ router.get('/getDanhSach/:idNguoiDung', async function (req, res) {
 
 router.get('/BanBe/:idNguoiDung',async function (req,res){
     const idNguoiDung = req.params.idNguoiDung;
-    const idDuocTheoDoi = req.body.idDuocTheoDoi;
-    const trangThai = req.body.trangThai;
     var themBanBe = await NguoiDung.findOne(NguoiDung.where({idNguoiDung: idNguoiDung,trangThai: 1}));
-
-
     if (themBanBe == null){
+        await NguoiDung.create({
+            trangThai:1
+        }).then(result => {idDuocTheoDoi = result._id})
+
         res.end(JSON.stringify({
-            data: false,
-            message:'Chưa tồn tại trong danh sách'
+            data:{
+                id:idDuocTheoDoi,
+                trangThai:1
+            },
+            message:'Ket ban thanh cong'
         }));
     }else{
-        res.end(JSON.stringify({
-            data: true,
-            message:'Đã tồn tại trong danh sách'
-        }));
+        res.end(JSON.stringify({data: {}, message: "Tài khỏan đã tồn tại"}));
     }
+    
 });
 
 module.exports = router;
